@@ -1,0 +1,8 @@
+# GMT 6 Session common arguments shelf
+BEGIN GMT 6.0.0
+B	x1+lSeafloor depth (km)y10+lCrustal thickness (km)SWne
+J	X
+JX	X3i
+R	0/5/2/35
+@L	14
+END
