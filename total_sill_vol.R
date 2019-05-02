@@ -23,17 +23,13 @@ get_vol <- function(diameters_km, thickness_m, num_sills=920.0)
 # Calculate and make plot 
 # First plot for observed sill complex volum
 p1 <- tibble(diameters = seq(from=1, to=10, by=0.1)) %>% # Make a tibble with diams
-  mutate("50 m" = get_vol(diameters, 50),        # Make the columns of vols for each sill thickness 
+  mutate("25 m" = get_vol(diameters, 25),        # Make the columns of vols for each sill thickness 
+         "50 m" = get_vol(diameters, 50),
+         "75 m" = get_vol(diameters, 75),
          "100 m" = get_vol(diameters, 100), 
          "150 m" = get_vol(diameters, 150), 
-         "200 m" = get_vol(diameters, 200), 
-         "250 m" = get_vol(diameters, 250), 
-         "300 m" = get_vol(diameters, 300), 
-         "350 m" = get_vol(diameters, 350), 
-         "400 m" = get_vol(diameters, 400)
-         ) %>% 
-  gather(thickness, volume, "50 m", "100 m", "150 m", "200 m", "250 m", 
-         "300 m", "350 m", "400 m") %>%          # Gather to make data long format
+         "200 m" = get_vol(diameters, 200)) %>% 
+  gather(thickness, volume, "25 m", "50 m", "75 m", "100 m", "150 m", "200 m") %>%          # Gather to make data long format
   mutate(label = if_else(diameters == max(diameters), 
                  as.character(thickness), NA_character_)) %>%   # Make a label at the end of the line
   ggplot(aes(x=diameters, y=volume, group=thickness)) + 
@@ -41,7 +37,7 @@ p1 <- tibble(diameters = seq(from=1, to=10, by=0.1)) %>% # Make a tibble with di
   geom_label(aes(label=label), na.rm=TRUE, label.size=0) +
   xlim(0,11) +
   scale_colour_discrete(guide = 'none') + 
-  annotate("text", x = 10, y = 0.33e05, label = "Average\nsill thickness") +
+  annotate("text", x = 10, y = 0.17e05, label = "Average\nsill thickness") +
   labs(x = "Average sill diameter (km)",
        y = bquote("Observed sill complex volume (" ~ km^3~")")) +
   theme_tufte(base_size = 16, base_family = "sansserif")
@@ -50,17 +46,13 @@ p1 <- tibble(diameters = seq(from=1, to=10, by=0.1)) %>% # Make a tibble with di
 # Second plot for total sill complex volume 
 # number of sills is 145,000 sq km * 0.05 sill area density = 7250 sills
 p2 <- tibble(diameters = seq(from=1, to=10, by=0.1)) %>% # Make a tibble with diams
-  mutate("50 m" = get_vol(diameters, 50, 7250),        # Make the columns of vols for each sill thickness 
+  mutate("25 m" = get_vol(diameters, 25, 7250),        # Make the columns of vols for each sill thickness 
+         "50 m" = get_vol(diameters, 50, 7250),
+         "75 m" = get_vol(diameters, 75, 7250),
          "100 m" = get_vol(diameters, 100, 7250), 
          "150 m" = get_vol(diameters, 150, 7250), 
-         "200 m" = get_vol(diameters, 200, 7250), 
-         "250 m" = get_vol(diameters, 250, 7250), 
-         "300 m" = get_vol(diameters, 300, 7250), 
-         "350 m" = get_vol(diameters, 350, 7250), 
-         "400 m" = get_vol(diameters, 400, 7250)
-  ) %>% 
-  gather(thickness, volume, "50 m", "100 m", "150 m", "200 m", "250 m", 
-         "300 m", "350 m", "400 m") %>%          # Gather to make data long format
+         "200 m" = get_vol(diameters, 200, 7250)) %>% 
+  gather(thickness, volume, "25 m", "50 m", "75 m", "100 m", "150 m", "200 m") %>%          # Gather to make data long format
   mutate(label = if_else(diameters == max(diameters), 
                          as.character(thickness), NA_character_)) %>%   # Make a label at the end of the line
   ggplot(aes(x=diameters, y=volume, group=thickness)) + 
@@ -68,7 +60,7 @@ p2 <- tibble(diameters = seq(from=1, to=10, by=0.1)) %>% # Make a tibble with di
   geom_label(aes(label=label), na.rm=TRUE, label.size=0) +
   xlim(0,11) +
   scale_colour_discrete(guide = 'none') + 
-  annotate("text", x = 10, y = 2.6e05, label = "Average\nsill thickness") +
+  annotate("text", x = 10, y = 1.325e05, label = "Average\nsill thickness") +
   labs(x = "Average sill diameter (km)",
        y = bquote("Total sill complex volume (" ~ km^3~")")) +
   theme_tufte(base_size = 16, base_family = "sansserif")
